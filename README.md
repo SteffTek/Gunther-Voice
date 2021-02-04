@@ -13,5 +13,11 @@ ___
 ___
 ## Installation
 ```
-npm install
+    npm install
+```
+Rename ```default.config.json``` to config.json and fill out the missing information.
+
+Afterwards you can start Gunther Voice with
+```
+    npm start
 ```
