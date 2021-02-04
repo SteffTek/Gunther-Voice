@@ -1,7 +1,9 @@
 # Gunther-Voice
 ## Voice Bot for usage with Gunther Discord AI
 
-Please visit [This Repo](https://github.com/SteffTek/Gunther-Bot) for Gunther AI
+Please visit [this Repo](https://github.com/SteffTek/Gunther-Bot) for Gunther AI Bot.
+
+**THIS APPLICATION DOESN'T WORK WITHOUT THE OTHER BOT!**
 
 ___
 
