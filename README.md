@@ -17,6 +17,15 @@ ___
 ```
 Rename ```default.config.json``` to config.json and fill out the missing information.
 
+```json
+{
+    "token": "",
+    "prefix":"!cb",
+    "command_channel":"",
+    "websocket":"ws://localhost:8765"
+}
+```
+
 Afterwards you can start Gunther Voice with
 ```
     npm start
