@@ -21,6 +21,7 @@ async function convertText(data) {
     let string = data.content;
     let discordMember = data.author;
 
+    //Stack Overflow: https://stackoverflow.com/questions/10570286/check-if-string-contains-url-anywhere-in-string-using-javascript
     if(new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?").test(string)) {
         return;
     }
