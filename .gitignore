@@ -11,6 +11,9 @@ config.json
 # VSCode
 .vscode/
 
+#User Audio
+user_audio/
+
 # Blog Dist
 dist_blog/
 

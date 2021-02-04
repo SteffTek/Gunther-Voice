@@ -1,6 +1,6 @@
 {
     "token": "",
     "prefix":"!cb",
-    "channel":"",
+    "command_channel":"",
     "websocket":"ws://localhost:8765"
 }

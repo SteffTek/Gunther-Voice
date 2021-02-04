@@ -121,7 +121,7 @@ client.on('message', async message => {
         return;
     }
 
-    if (message.channel.id == config.channel) {
+    if (message.channel.id == config.command_channel) {
         let content = message.content;
         let member = message.member;
 
