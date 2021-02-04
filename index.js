@@ -21,6 +21,10 @@ async function convertText(data) {
     let string = data.content;
     let discordMember = data.author;
 
+    if(new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?").test(string)) {
+        return;
+    }
+
     string = discordMember.displayName + ", " + string;
 
     if (currentTalkChannel == null) {
