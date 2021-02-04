@@ -1,0 +1,25 @@
+{
+  "name": "gunther_bot_voice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/opus": "^0.4.0",
+    "@google-cloud/text-to-speech": "^3.1.3",
+    "discord.js": "^12.5.1",
+    "ffmpeg-static": "^4.2.7",
+    "google-translate-tts": "^0.4.0-dev",
+    "google-tts-api": "^2.0.1",
+    "node-gtts": "^2.0.2",
+    "reconnecting-websocket": "^4.4.0",
+    "request": "^2.88.2",
+    "say": "^0.16.0",
+    "ws": "^7.4.2"
+  }
+}
