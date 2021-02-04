@@ -36,7 +36,7 @@ async function convertText(data) {
     }
 
     const url = googleTTS.getAudioUrl(string, {
-        lang: 'de-DE',
+        lang: config['tts-lang'],
         slow: false,
         host: 'https://translate.google.com',
     });
@@ -128,20 +128,20 @@ client.on('message', async message => {
         if (content == config.prefix + " join") {
 
             if (message.member.voice.channelID == null) {
-                await message.channel.send(`<@${member.id}> Du befindest dich nicht in einem Sprachkanal.`)
+                await message.channel.send(`<@${member.id}>` + config.lang.not_in_voice)
                 return;
             }
 
             if (voiceConnection != null) {
-                await message.channel.send(`<@${member.id}> Ich befinde mich bereits in einem Sprachkanal.`)
+                await message.channel.send(`<@${member.id}> ` + config.lang.already_in_voice)
                 return;
             }
 
-            await message.channel.send(`<@${member.id}> Alles klar, bin auf dem Weg!`)
+            await message.channel.send(`<@${member.id}> ` + config.lang.on_my_way)
             await joinVoiceChat(message.member.voice.channelID);
 
             let payload = {
-                content: "Hallo",
+                content: "Hey",
                 author: message.member
             }
             await ws.send(JSON.stringify(payload))
