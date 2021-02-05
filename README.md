@@ -29,7 +29,8 @@ Rename ```default.config.json``` to config.json and fill out the missing informa
     "lang": {
         "not_in_voice":"You are currently not in any voice channel!",
         "already_in_voice":"I'm already in a voice channel!",
-        "on_my_way":"Alright! On my way fellow kids!"
+        "on_my_way":"Alright! On my way fellow kids!",
+        "join_message":"Hello"
     }
 }
 ```
