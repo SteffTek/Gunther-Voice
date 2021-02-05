@@ -99,7 +99,11 @@ async function convertText(data) {
     //GET DURATION AND READY NEXT FILE
     let duration = await mp3Duration(download_path) * 1000;
     setTimeout(async function () {
-        await fs.unlinkSync(download_path);
+        try {
+            await fs.unlinkSync(download_path);
+        } catch(e) {
+            console.log("Error while Unlinking File...")
+        }
         isPlaying = false;
     }, duration)
 }
