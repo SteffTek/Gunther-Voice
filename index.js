@@ -133,7 +133,7 @@ client.on('message', async message => {
         if (content == config.prefix + " join") {
 
             if (message.member.voice.channelID == null) {
-                await message.channel.send(`<@${member.id}>` + config.lang.not_in_voice)
+                await message.channel.send(`<@${member.id}> ` + config.lang.not_in_voice)
                 return;
             }
 
@@ -146,7 +146,7 @@ client.on('message', async message => {
             await joinVoiceChat(message.member.voice.channelID);
 
             let payload = {
-                content: "Hey",
+                content: config.lang.join_message,
                 author: message.member
             }
             await ws.send(JSON.stringify(payload))
