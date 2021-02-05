@@ -5,8 +5,9 @@ Please visit [this Repo](https://github.com/SteffTek/Gunther-Bot) for Gunther AI
 
 **THIS APPLICATION DOESN'T WORK WITHOUT THE OTHER BOT!**
 
-___
+## Click for [Releases](https://github.com/SteffTek/Gunther-Voice/releases)
 
+___
 ## Prerequisites
 | Programm        | Version           |
 | --------------- |:-----------------:|
