@@ -16,6 +16,7 @@
     "ffmpeg-static": "^4.2.7",
     "google-translate-tts": "^0.4.0-dev",
     "google-tts-api": "^2.0.1",
+    "mp3-duration": "^1.1.0",
     "node-gtts": "^2.0.2",
     "reconnecting-websocket": "^4.4.0",
     "request": "^2.88.2",

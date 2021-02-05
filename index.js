@@ -7,6 +7,8 @@ const https = require('https');
 const path = require("path");
 const Readable = require('stream').Readable;
 
+/*GET MP3 DURATION*/
+const mp3Duration = require('mp3-duration');
 
 const client = new Discord.Client();
 let currentTalkChannel = null;
@@ -16,19 +18,39 @@ let voiceConnection = null;
     TTS
 */
 const googleTTS = require('google-tts-api');
+var item_queue = [];
+var isPlaying = false;
+
+setInterval(async function () {
+
+    if (isPlaying) {
+        return;
+    }
+
+    if (item_queue.length == 0) {
+        return;
+    }
+
+    await convertText(item_queue.shift())
+    isPlaying = true;
+
+}, 10)
+
 async function convertText(data) {
 
     let string = data.content;
     let discordMember = data.author;
 
     //Stack Overflow: https://stackoverflow.com/questions/10570286/check-if-string-contains-url-anywhere-in-string-using-javascript
-    if(new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?").test(string)) {
+    if (new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?").test(string)) {
+        isPlaying = false;
         return;
     }
 
     string = discordMember.displayName + ", " + string;
 
     if (currentTalkChannel == null) {
+        isPlaying = false;
         return;
     }
 
@@ -37,6 +59,7 @@ async function convertText(data) {
     }
 
     if (data.content.length > 198) {
+        isPlaying = false;
         return;
     }
 
@@ -46,7 +69,39 @@ async function convertText(data) {
         host: 'https://translate.google.com',
     });
 
-    await voiceConnection.play(url, { quality: 'highestaudio', volume: 0.85 })
+    //DOWNLOAD
+    let download_path = path.join("user_audio", discordMember.userID + "_received.mp3")
+    let file = fs.createWriteStream(download_path);
+    await new Promise((resolve, reject) => {
+        let stream = request({
+            uri: url
+        })
+        .pipe(file)
+        .on('finish', () => {
+            resolve();
+        })
+        .on('error', (error) => {
+            reject(error);
+        })
+    })
+    .catch(error => {
+        console.log(`Something happened: ${error}`);
+    });
+
+    console.log("Downloaded TTS Audio for user " + discordMember.displayName);
+
+    //ALTER TTS AUDIO
+    //TODO: PITCHING
+
+    //PLAY
+    await voiceConnection.play(download_path, { quality: 'highestaudio', volume: 0.85 })
+
+    //GET DURATION AND READY NEXT FILE
+    let duration = await mp3Duration(download_path) * 1000;
+    setTimeout(async function () {
+        await fs.unlinkSync(download_path);
+        isPlaying = false;
+    }, duration)
 }
 
 /*
@@ -66,6 +121,7 @@ async function getTextFromAudio(discordMember) {
             binary: rawData
         }
         await ws.send(JSON.stringify(payload))
+        await fs.unlinkSync(peth);
     } catch (e) {
         return false;
     }
@@ -99,7 +155,8 @@ async function connect() {
             return;
         }
 
-        await convertText(JSON.parse(e.data));
+        //await convertText(JSON.parse(e.data));
+        item_queue.push(JSON.parse(e.data))
     };
 
     ws.onclose = function (e) {
@@ -237,7 +294,7 @@ async function joinVoiceChat(channelID) {
 
         //EVENT HANDLING
         voiceConnection.on("speaking", onSpeaking);
-        voiceConnection.on("disconnect", async function() {
+        voiceConnection.on("disconnect", async function () {
             console.log("Disconnected from Channel " + currentTalkChannel.name);
             voiceConnection = null;
             currentTalkChannel = null;
